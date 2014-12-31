@@ -1,0 +1,26 @@
+{
+  "name": "fivedots/nepalicalendar",
+  "description": "Composer ready nepali calendar",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.3.0",
+    "fivedots/nepalicalendar":"*"
+  },
+
+  "authors": [
+    {
+      "name": "Samundra Shrestha",
+      "email": "samundra.shr@gmail.com"
+    },
+    {
+      "name": "Amant Tuladhar",
+      "email": "aman.tuladhar@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Fivedots\\NepaliCalendar\\":"src/Fivedots/NepaliCalendar"
+    }
+  }
+}
