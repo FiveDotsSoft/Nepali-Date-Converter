@@ -1,4 +1,4 @@
-# Introduction of the Repository
+# Introduction of the Repository [![Build Status](https://travis-ci.org/FiveDotsSoft/Nepali-Date-Converter.svg?branch=master)](https://travis-ci.org/FiveDotsSoft/Nepali-Date-Converter)
 
 This repository contains the PHP code that can be used to convert date from Nepali-English and vice versa.
  
