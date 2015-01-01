@@ -36,6 +36,7 @@ After adding the above require statement, run `composer update`.
 
  // Get Nepali to English converted date
  print_r($calendar->nepaliToEnglish(2071,9,17));
+
 ```    
 
 Hope this helps someone.
