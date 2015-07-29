@@ -71,14 +71,16 @@ class Calendar
             // Count total days in-terms of year
             for ($i = 0; $i < ($year - $def_nyy); $i++) {
                 for ($j = 1; $j <= 12; $j++) {
-                    $total_nDays += $this->provider->getData($def_nyy + $k)[$j];
+                    $data = $this->provider->getData($def_nyy + $k);
+                    $total_nDays += $data[$j];
                 }
                 $k++;
             }
 
             // Count total days in-terms of month
             for ($j = 1; $j < $month; $j++) {
-                $total_nDays += $this->provider->getData($def_nyy + $k)[$j];
+                $data = $this->provider->getData($def_nyy + $k);
+                $total_nDays += $data[$j];
             }
 
             // Count total days in-terms of dat
@@ -193,7 +195,8 @@ class Calendar
 
             // Count nepali date from array
             while ($total_eDays != 0) {
-                $a = $this->provider->getData($def_nyy + $i)[$j];
+                $data = $this->provider->getData($def_nyy + $i);
+                $a = $datagit[$j];
 
                 $total_nDays++;     //count the days
                 $day++;             //count the days interms of 7 days
