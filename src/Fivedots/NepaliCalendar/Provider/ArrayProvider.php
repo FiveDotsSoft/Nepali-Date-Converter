@@ -1,17 +1,19 @@
 <?php
-use Fivedots\NepaliCalendar\Calendar;
 
-class CalendarTest extends PHPUnit_Framework_TestCase
+namespace Fivedots\NepaliCalendar\Provider;
+
+use Fivedots\NepaliCalendar\CalendarException;
+use Fivedots\NepaliCalendar\CalendarMessages;
+
+/**
+ * Class ArrayProvider
+ * @package Fivedots\NepaliCalendar\Provider
+ * @author broncha <broncha@rajesharma.com>
+ */
+class ArrayProvider implements ProviderInterface
 {
-    /**
-     * @var Fivedots\NepaliCalendar\Calendar
-     */
-    protected $calendar;
 
-    /**
-     * @var array
-     */
-    private $_availableDates= array(
+    private $nepaliDates = array(
         0 => array(2000, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31),
         1 => array(2001, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30),
         2 => array(2002, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30),
@@ -105,89 +107,32 @@ class CalendarTest extends PHPUnit_Framework_TestCase
         90 => array(2090, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30)
     );
 
-    /**
-     * @var array
-     */
-    protected $nepToEnglish = array(
-        'year' => 2014,
-        'month' => 12,
-        'date' => 31,
-        'day' => 'Wednesday',
-        'numDay' => 4,
-        'nmonth' => 'December'
-    );
-
-    /**
-     * @var array
-     */
-    protected $enToNepali = array(
-        'year' => 2071,
-        'month' => 9,
-        'date' => 16,
-        'day' => 'Wednesday',
-        'numDay' => 4,
-        'nmonth' => 'Poush'
-    );
-
-    public function setUp()
+    public function getData($year)
     {
-        $provider = $this->getMockBuilder('\Fivedots\NepaliCalendar\NepaliDataProvider')->getMock();
-        $provider->expects($this->once())
-                 ->method('getAvailableDates')
-                 ->will($this->returnValue($this->_availableDates));
-        $this->calendar = new Calendar($provider);
+        foreach($this->nepaliDates as $yearData) {
+            if($yearData[0] == $year) {
+                return $yearData;
+            }
+        }
+
+        throw new CalendarException(CalendarMessages::E_UNSUPPORTED);
     }
 
-    public function testIDataProvierInterfaceInstance(){
-        $provider = $this->getMockBuilder('\Fivedots\NepaliCalendar\IDataProvider')->getMock();
-        $this->assertInstanceOf('\Fivedots\NepaliCalendar\IDataProvider',$provider);
-    }
-
-    /**
-     * @covers \Fivedots\NepaliCalendar\Calendar::nepaliToEnglish()
-     * @throws \Fivedots\NepaliCalendar\CalendarException
-     */
-    public function testNepaliToEnglishDate()
+    public function isValidDate($year, $month, $date)
     {
-        $date = $this->calendar->nepaliToEnglish(2071, 9, 16);
-        $this->assertInternalType('array', $date);
-        $this->assertSame($this->nepToEnglish, $date);
+        $data = $this->getData($year);
+
+        if ($month < 1 || $month > 12) {
+            return false;
+        }
+
+        $actualDays = $data[$month];
+        if($date > $actualDays || $date < 1) {
+            return false;
+        }
+
+        return true;
     }
 
-    /**
-     * @covers \Fivedots\NepaliCalendar\Calendar::englishToNepali()
-     * @throws \Fivedots\NepaliCalendar\CalendarException
-     */
-    public function testEnglishToNepaliDate()
-    {
-        $date = $this->calendar->englishToNepali(2014, 12, 31);
-        $this->assertInternalType('array', $date);
-        $this->assertSame($this->enToNepali, $date);
-    }
 
-    /**
-     * @param int $year Year
-     * @param int $expectedResult Actual Result for the supplied Year
-     * @covers \Fivedots\NepaliCalendar\Calendar::isLeapYear()
-     * @dataProvider providerTestIsLeapYear
-     */
-    public function testIsLeapYear($year,$expectedResult){
-        $result = $this->calendar->isLeapYear($year);
-        $this->assertEquals($expectedResult,$result);
-
-    }
-
-    /**
-     * @return array Years to test as leap years
-     */
-    public function providerTestIsLeapYear(){
-        return array(
-            array(2006,false),
-            array(2008,true),
-            array(2010,false),
-            array(2012,true),
-            array(2013,false),
-            array(2016,true),
-        );
-    }
 }

@@ -3,14 +3,17 @@ namespace Fivedots\NepaliCalendar;
 
 use Fivedots\NepaliCalendar\Month\Nepali;
 use Fivedots\NepaliCalendar\Month\English;
+use Fivedots\NepaliCalendar\Provider\ProviderInterface;
 
 class Calendar
 {
-    // Data for nepali date
-    private $_bs;
+    /**
+     * @var ProviderInterface
+     */
+    private $provider;
 
-    public function __construct(IDataProvider $dp){
-        $this->_bs = $dp->getAvailableDates();
+    public function __construct(ProviderInterface $providerInterface){
+        $this->provider = $providerInterface;
     }
 
 
@@ -60,22 +63,22 @@ class Calendar
         $lmonth = array(0,31,29,31,30,31,30,31,31,30,31,30,31);
 
         // Check for date range
-        $chk = Nepali::isValidRange($year, $month, $date);
+        $chk = $this->provider->isValidDate($year, $month, $date);
 
         if ($chk !== TRUE) {
-            throw new CalendarException(CalendarMessages::E_OUT_OF_RANGE, $year, $month, $date);
+            throw new CalendarException(sprintf(CalendarMessages::E_OUT_OF_RANGE, $year, $month, $date));
         } else {
             // Count total days in-terms of year
             for ($i = 0; $i < ($year - $def_nyy); $i++) {
                 for ($j = 1; $j <= 12; $j++) {
-                    $total_nDays += $this->_bs[$k][$j];
+                    $total_nDays += $this->provider->getData($def_nyy + $k)[$j];
                 }
                 $k++;
             }
 
             // Count total days in-terms of month
             for ($j = 1; $j < $month; $j++) {
-                $total_nDays += $this->_bs[$k][$j];
+                $total_nDays += $this->provider->getData($def_nyy + $k)[$j];
             }
 
             // Count total days in-terms of dat
@@ -140,7 +143,7 @@ class Calendar
         $chk = English::isValidRange($year, $month, $date);
 
         if ($chk !== TRUE) {
-            throw new CalendarException(CalendarMessages::E_OUT_OF_RANGE, $year, $month, $date);
+            throw new CalendarException(sprintf(CalendarMessages::E_OUT_OF_RANGE, $year, $month, $date));
         } else {
             // Month data.
             $monthData = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
@@ -190,7 +193,7 @@ class Calendar
 
             // Count nepali date from array
             while ($total_eDays != 0) {
-                $a = $this->_bs[$i][$j];
+                $a = $this->provider->getData($def_nyy + $i)[$j];
 
                 $total_nDays++;     //count the days
                 $day++;             //count the days interms of 7 days
