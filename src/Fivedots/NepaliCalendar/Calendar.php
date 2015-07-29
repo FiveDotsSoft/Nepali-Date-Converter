@@ -196,7 +196,7 @@ class Calendar
             // Count nepali date from array
             while ($total_eDays != 0) {
                 $data = $this->provider->getData($def_nyy + $i);
-                $a = $datagit[$j];
+                $a = $data[$j];
 
                 $total_nDays++;     //count the days
                 $day++;             //count the days interms of 7 days
