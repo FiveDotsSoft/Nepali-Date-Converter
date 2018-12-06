@@ -35,7 +35,7 @@ jobs:
 
       - run:
           name: Install PHPUnit
-          command: composer require --dev phpunit:phpunit
+          command: composer require --dev phpunit/phpunit ^6.5
 
       - save_cache:
           paths:
