@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: broncha
- * Date: 7/29/15
- * Time: 11:37 AM
- */
+
 namespace Fivedots\NepaliCalendar\Tests\Provider;
 
+use PHPUnit\Framework\TestCase;
 use Fivedots\NepaliCalendar\Provider\ArrayProvider;
 
-class ArrayProviderTest extends \PHPUnit_Framework_TestCase
+class ArrayProviderTest extends TestCase
 {
     /**
      * @var ArrayProvider
@@ -46,6 +42,4 @@ class ArrayProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->provider->isValidDate(2043,11,31));
     }
-
-
 }

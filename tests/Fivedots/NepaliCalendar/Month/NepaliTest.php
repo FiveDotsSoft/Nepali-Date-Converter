@@ -1,10 +1,10 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Fivedots\NepaliCalendar\Month\Nepali;
 
-class NepaliTest extends PHPUnit_Framework_TestCase
+class NepaliTest extends TestCase
 {
-
     /**
      * @param $index
      * @param $expectedResult
@@ -16,7 +16,6 @@ class NepaliTest extends PHPUnit_Framework_TestCase
         $result = Nepali::getTitle($index);
         $this->assertEquals($expectedResult, $result);
     }
-
 
     public function providerEnglishMonthName()
     {

@@ -1,10 +1,10 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Fivedots\NepaliCalendar\Month\English;
 
-class EnglishTest extends PHPUnit_Framework_TestCase
+class EnglishTest extends TestCase
 {
-
     /**
      * @dataProvider providerIsValidRangeValueReturn
      * @covers \Fivedots\NepaliCalendar\Month\English::isValidRange()
