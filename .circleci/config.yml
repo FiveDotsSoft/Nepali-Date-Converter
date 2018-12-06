@@ -29,7 +29,13 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: composer install -n --prefer-dist
+      - run: 
+          name: Install Composer
+          command: composer install -n --prefer-dist
+
+      - run:
+          name: Install PHPUnit
+          command: composer require --dev phpunit:phpunit
 
       - save_cache:
           paths:
@@ -37,4 +43,4 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-      - run: phpunit
+      - run: vendor/bin/phpunit --debug
