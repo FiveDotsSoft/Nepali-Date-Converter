@@ -1,21 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: broncha
- * Date: 7/29/15
- * Time: 11:53 AM
- */
+
 namespace Fivedots\NepaliCalendar\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Fivedots\NepaliCalendar\Calendar;
 use Fivedots\NepaliCalendar\Provider\ArrayProvider;
 
-class CalendarTest extends \PHPUnit_Framework_TestCase
+class CalendarTest extends TestCase
 {
     /**
      * @var Calendar
      */
     private $calendar;
+    
     /**
      * @var array
      */
