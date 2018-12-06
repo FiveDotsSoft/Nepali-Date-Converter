@@ -6,7 +6,8 @@ version: 2
 jobs:
   build:
     branches:
-      only: 
+      only:
+        - master
         - /feature.*/
     docker:
       # specify the version you desire here
